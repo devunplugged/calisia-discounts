@@ -3,10 +3,6 @@
  * Plugin Name: calisia-discounts
  */
 
-
-
-
-## The following goes inside the constructor ##
 $calisiaDiscounts = new CalisiaDiscounts();
 // Simple, grouped and external products
 add_filter('woocommerce_product_get_price', array( $calisiaDiscounts, 'custom_price' ), 99, 2 );
@@ -23,9 +19,6 @@ add_filter('woocommerce_variation_prices_regular_price', array( $calisiaDiscount
 add_filter( 'woocommerce_get_variation_prices_hash', array( $calisiaDiscounts, 'add_price_multiplier_to_variation_prices_hash' ), 99, 3 );
 
 
-## This goes outside the constructor ##
-
-// Utility function to change the prices with a multiplier (number)
 class CalisiaDiscounts{
     public function get_price_multiplier() {
         return 0.9; // x2 for testing
@@ -48,20 +41,16 @@ class CalisiaDiscounts{
     }
 
     public function add_price_multiplier_to_variation_prices_hash( $price_hash, $product, $for_display ) {
-        if(!$this->user_has_discount()){
-            return $price_hash; // return $price ??
-        }
-
-        $price_hash[] = $this->get_price_multiplier();
+        if($this->user_has_discount())
+            $price_hash[] = $this->get_price_multiplier();
         return $price_hash;
     }
 
     public function user_has_discount(){
         
         $user = wp_get_current_user();
-        if ( in_array( 'klient_ekskluzywny', (array) $user->roles ) ) {
+        if ( in_array( 'klient_ekskluzywny', (array) $user->roles ) )
             return true;
-        }
         return false;
     }
 }
