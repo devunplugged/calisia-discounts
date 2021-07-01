@@ -2,7 +2,9 @@
 /**
  * Plugin Name: calisia-discounts
  */
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
 $calisiaDiscounts = new CalisiaDiscounts();
 // Simple, grouped and external products
 add_filter('woocommerce_product_get_price', array( $calisiaDiscounts, 'custom_price' ), 99, 2 );
