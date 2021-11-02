@@ -23,7 +23,10 @@ add_filter( 'woocommerce_get_variation_prices_hash', array( $calisiaDiscounts, '
 
 class CalisiaDiscounts{
     public function get_price_multiplier() {
-        return 0.9; // x2 for testing
+        if(is_admin()){
+            return 1; //dont change prices in admin interface
+        }
+        return 0.95; // discounted price
     }
 
     public function custom_price( $price ) { //public function custom_price( $price, $product ) {
